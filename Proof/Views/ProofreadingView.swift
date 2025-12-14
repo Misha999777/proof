@@ -1,0 +1,182 @@
+//
+//  ProofingInterfaceView.swift
+//  Proof
+//
+//  Created by Михайло Грошевий on 09/12/2025.
+//
+
+import SwiftUI
+
+// MARK: - ViewModel
+@Observable
+class ProofreadingModel {
+    var originalText: String
+    var proofreadText: String = ""
+    var selectedGoal: ProofingGoal = .fixGrammar
+    var isLoading = false
+    
+    init(originalText: String) {
+        self.originalText = originalText
+        runProofreading()
+    }
+    
+    func reset() {
+        originalText = ""
+        proofreadText = ""
+    }
+    
+    func runProofreading() {
+        guard !originalText.isEmpty && ConfigurationService.shared.isConfigured else { return }
+        
+        isLoading = true
+        let fullPrompt = selectedGoal.promptText + "\n\n" + originalText
+        
+        proofread(text: fullPrompt) { [weak self] status, text in
+            guard let self = self else { return }
+            self.proofreadText = text
+            self.isLoading = false
+        }
+    }
+}
+
+// MARK: - View
+struct ProofreadingView: View {
+    
+    @State var vm: ProofreadingModel
+    @Binding var showSettings: Bool
+
+    @FocusState var focused
+    
+    init(originalText: String, showSettings: Binding<Bool>) {
+        self.vm = ProofreadingModel(originalText: originalText)
+        self._showSettings = showSettings
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            
+            Section(header:
+                HStack {
+                    sectionHeader("Goal")
+                    Spacer()
+                    Button(action: {
+                        showSettings = true
+                    }) {
+                        Image(systemName: "gearshape.fill")
+                            .foregroundStyle(.secondary)
+                    }
+                    .buttonStyle(.plain)
+                    .help("Settings")
+                }
+            ) {
+                Picker("", selection: $vm.selectedGoal) {
+                    ForEach(ProofingGoal.allCases) { goal in
+                        Text(goal.rawValue).tag(goal)
+                    }
+                }
+                .labelsHidden()
+                .pickerStyle(.menu)
+                .frame(width: 200)
+            }
+            
+            Section(header:
+                HStack {
+                    sectionHeader("Original Text")
+                    Spacer()
+                    Button(role: .destructive) {
+                        vm.reset()
+                    } label: {
+                        Label("Clear", systemImage: "trash")
+                            .labelStyle(.iconOnly)
+                    }
+                    .buttonStyle(.borderless)
+                    .help("Clear all text")
+                }
+            ) {
+                styledEditor($vm.originalText, height: 150)
+                    .focused($focused)
+                    .onAppear {
+                        DispatchQueue.main.async {
+                            focused = true
+                        }
+                    }
+            }
+            
+            HStack {
+                Button {
+                    vm.runProofreading()
+                } label: {
+                    Label("Run Proofreading", systemImage: "wand.and.stars")
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(vm.originalText.isEmpty)
+                
+                if vm.isLoading {
+                    ProgressView()
+                        .controlSize(.small)
+                        .padding(.leading, 8)
+                }
+            }
+            
+            Section(header: sectionHeader("Result")) {
+                styledEditor($vm.proofreadText, height: 150)
+            }
+            
+            Divider()
+            
+            HStack {
+                Button(role: .destructive) {
+                    NSApplication.shared.terminate(nil)
+                } label: {
+                    Label("Exit", systemImage: "power")
+                }
+                
+                Spacer()
+                
+                Button {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(vm.proofreadText, forType: .string)
+                } label: {
+                    Label("Copy Result", systemImage: "doc.on.doc")
+                }
+                .disabled(vm.proofreadText.isEmpty)
+            }
+        }
+        .padding(20)
+    }
+}
+
+// MARK: - UI Helpers
+@ViewBuilder
+func sectionHeader(_ title: String) -> some View {
+    Text(title)
+        .font(.headline)
+        .foregroundStyle(.secondary)
+}
+
+@ViewBuilder
+func styledEditor(_ binding: Binding<String>, height: CGFloat) -> some View {
+    TextEditor(text: binding)
+        .font(.system(size: 14))
+        .frame(height: height)
+        .padding(4)
+        .background(Color(nsColor: .textBackgroundColor))
+        .cornerRadius(6)
+        .overlay(
+            RoundedRectangle(cornerRadius: 6)
+                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+        )
+}
+
+// MARK: - Preview
+#Preview {
+    struct Preview: View {
+        @State var show = false
+        var body: some View {
+            ProofreadingView(originalText: "", showSettings: $show)
+                .frame(width: 400)
+        }
+    }
+
+    return Preview()
+}
