@@ -42,15 +42,10 @@ class ProofreadingModel {
 // MARK: - View
 struct ProofreadingView: View {
     
-    @State var vm: ProofreadingModel
+    @Bindable var vm: ProofreadingModel
     @Binding var showSettings: Bool
 
     @FocusState var focused
-    
-    init(originalText: String, showSettings: Binding<Bool>) {
-        self.vm = ProofreadingModel(originalText: originalText)
-        self._showSettings = showSettings
-    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -171,9 +166,12 @@ func styledEditor(_ binding: Binding<String>, height: CGFloat) -> some View {
 // MARK: - Preview
 #Preview {
     struct Preview: View {
+
+        @State var model = ProofreadingModel(originalText: "")
         @State var show = false
+
         var body: some View {
-            ProofreadingView(originalText: "", showSettings: $show)
+            ProofreadingView(vm: model, showSettings: $show)
                 .frame(width: 400)
         }
     }

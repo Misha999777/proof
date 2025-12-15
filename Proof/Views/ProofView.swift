@@ -10,10 +10,14 @@ import SwiftUI
 // MARK: - View
 struct ProofView: View {
 
-    @State var originalText: String
+    @State var proofreadingModel: ProofreadingModel
     
     @State var showSettings = false
     @State var isConfigured = ConfigurationService.shared.isConfigured
+    
+    init(originalText: String) {
+        _proofreadingModel = State(initialValue: ProofreadingModel(originalText: originalText))
+    }
     
     var body: some View {
         Group {
@@ -26,7 +30,7 @@ struct ProofView: View {
                     showSettings = false
                 })
             } else {
-                ProofreadingView(originalText: originalText, showSettings: $showSettings)
+                ProofreadingView(vm: proofreadingModel, showSettings: $showSettings)
             }
         }
         .onAppear {
