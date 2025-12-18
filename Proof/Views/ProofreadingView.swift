@@ -104,7 +104,7 @@ struct ProofreadingView: View {
                     Label("Run Proofreading", systemImage: "wand.and.stars")
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(vm.originalText.isEmpty)
+                .disabled(vm.originalText.isEmpty || vm.isLoading)
                 
                 if vm.isLoading {
                     ProgressView()
