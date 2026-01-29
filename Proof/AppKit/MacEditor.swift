@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// This exists because there is no way to implemnt good read-only TextEditor in SwiftUI
+// (TextEditor with .constant binding and Text are not exactly what is needed)
 struct MacEditor: NSViewRepresentable {
     
     @Binding var text: String
@@ -60,6 +62,8 @@ struct MacEditor: NSViewRepresentable {
     }
 }
 
+// Sometimes text is not deselected on click
+// macOS bug?
 class CustomTextView: NSTextView {
 
     override func mouseDown(with event: NSEvent) {
