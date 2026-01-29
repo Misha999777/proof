@@ -114,7 +114,7 @@ struct ProofreadingView: View {
             }
             
             Section(header: sectionHeader("Result")) {
-                styledEditor($vm.proofreadText, height: 150)
+                styledOutput(vm.proofreadText, height: 150)
             }
             
             Divider()
@@ -151,11 +151,19 @@ func sectionHeader(_ title: String) -> some View {
 
 @ViewBuilder
 func styledEditor(_ binding: Binding<String>, height: CGFloat) -> some View {
-    TextEditor(text: binding)
-        .font(.system(size: 14))
+    MacEditor(text: binding, isEditable: true)
         .frame(height: height)
-        .padding(4)
-        .background(Color(nsColor: .textBackgroundColor))
+        .cornerRadius(6)
+        .overlay(
+            RoundedRectangle(cornerRadius: 6)
+                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+        )
+}
+
+@ViewBuilder
+func styledOutput(_ text: String, height: CGFloat) -> some View {
+    MacEditor(text: .constant(text), isEditable: false)
+        .frame(height: height)
         .cornerRadius(6)
         .overlay(
             RoundedRectangle(cornerRadius: 6)
