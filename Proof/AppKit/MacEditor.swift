@@ -31,6 +31,7 @@ struct MacEditor: NSViewRepresentable {
         textView.isEditable = isEditable
         textView.isSelectable = true
         textView.isRichText = false
+        textView.allowsUndo = true
         
         textView.font = .systemFont(ofSize: 14)
         textView.textContainerInset = NSSize(width: 4, height: 4)
@@ -71,11 +72,12 @@ class CustomTextView: NSTextView {
         let index = self.characterIndexForInsertion(at: point)
         
         let isClickingOnSelection = self.selectedRange().contains(index)
-        
-        if isClickingOnSelection && self.selectedRange().length > 0 {
-            self.setSelectedRange(NSRange(location: NSNotFound, length: 0))
-        }
+        let selectionLength = self.selectedRange().length
         
         super.mouseDown(with: event)
+        
+        if isClickingOnSelection && selectionLength > 0 {
+            self.setSelectedRange(NSRange(location: index, length: 0))
+        }
     }
 }
