@@ -14,14 +14,13 @@ func proofread(text: String,
                completion: @escaping (Bool, String) -> Void) {
 
     let config = ConfigurationService.shared
-    
     let resolvedApiUrl = apiUrl ?? config.apiUrl
     let resolvedApiKey = apiKey ?? config.apiKey
     let resolvedModel = model ?? config.model
 
     let isConfigured = !resolvedApiUrl.isEmpty && !resolvedApiKey.isEmpty && !resolvedModel.isEmpty
     guard isConfigured else {
-        completion(false, "Error: Configuration missing. Please configure API URL, Key, and Model.")
+        complete(completion, success: false)
         return
     }
 
@@ -34,7 +33,7 @@ func proofread(text: String,
     }
 
     guard let endpointURL = URL(string: urlString) else {
-        completion(false, "Error: Invalid API URL.")
+        complete(completion, success: false)
         return
     }
 
@@ -56,29 +55,13 @@ func proofread(text: String,
     do {
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
     } catch {
-        completion(false, "Error serializing JSON: \(error)")
+        complete(completion, success: false)
         return
     }
 
     let task = URLSession.shared.dataTask(with: request) { data, response, urlError in
-        if let urlError = urlError {
-            completion(false, "Network error: \(urlError.localizedDescription)")
-            return
-        }
-
-        guard let httpResponse = response as? HTTPURLResponse else {
-            completion(false, "API Error: Invalid HTTP response.")
-            return
-        }
-        
-        guard httpResponse.statusCode == 200 else {
-            let errorBody = data.flatMap { String(data: $0, encoding: .utf8) } ?? "Unknown error"
-            completion(false, "API Error: Status \(httpResponse.statusCode). Body: \(errorBody)")
-            return
-        }
-
-        guard let data = data else {
-            completion(false, "API Error: Empty response.")
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data else {
+            complete(completion, success: false)
             return
         }
 
@@ -89,18 +72,26 @@ func proofread(text: String,
                   let message = firstChoice["message"] as? [String: Any],
                   let content = message["content"] as? String else {
 
-                completion(false, "Could not parse response data: \(String(data: data, encoding: .utf8) ?? "N/A")")
+                complete(completion, success: false)
                 return
             }
             
-            completion(true, content)
+            complete(completion, success: true, result: content)
             return
 
         } catch {
-            completion(false, "JSON parsing error: \(error)")
+            complete(completion, success: false)
             return
         }
     }
     
     task.resume()
+}
+
+func complete(_ completion: @escaping (Bool, String) -> Void, success: Bool, result: String = "") {
+    if (success) {
+        completion(true, result)
+    } else {
+        completion(false, String(localized: "API Error"))
+    }
 }

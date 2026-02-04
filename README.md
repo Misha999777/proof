@@ -5,9 +5,8 @@
 ## Features
 
 *   **Menu Bar Application:** Always accessible from the menu bar.
-*   **Quick Shortcuts:**
+*   **Quick Shortcut:**
     *   **Proofread (Cmd+Shift+P by default):** Instantly processes selected text, proofreads it, and replaces it in-place.
-    *   **Proofread in a Window (Cmd+Shift+O by default):** Opens the Proof UI with the selected text, allowing you to choose different proofreading goals and edit text.
 *   **Customizable Backend:** Works with any OpenAI-compatible API.
 
 ## Installation
@@ -46,9 +45,8 @@ Click the menu bar icon to open the main popover. From here you can:
 Select any text in any application (Notes, TextEdit, Browser, etc.), then select an option from the Services Menu (or use a shortcut):
 
 *   **Proofread (Cmd+Shift+P by default):** Instantly processes selected text, proofreads it, and replaces it in-place.
-*   **Proofread in a Window (Cmd+Shift+O by default):** Opens the Proof UI with the selected text, allowing you to choose different proofreading goals and edit text.
 
-*Tip: You can change keyboard shortcuts to these services in **System Settings > Keyboard > Keyboard Shortcuts > Services > Text**.*
+*Tip: You can change keyboard shortcut to this service in **System Settings > Keyboard > Keyboard Shortcuts > Services > Text**.*
 
 ## Requirements
 *   macOS 15.0 or later.

@@ -6,22 +6,28 @@
 //
 
 import AppKit
-import SwiftUI
 
 class ServiceHandler: NSObject {
+    
+    var processingStatusCnaged: (Bool) -> Void
+    
+    init(processingStatusCnaged: @escaping (Bool) -> Void) {
+        self.processingStatusCnaged = processingStatusCnaged
+    }
 
     @objc func replaceTextWithAPIResult(_ pasteboard: NSPasteboard, userData: String?, error: NSErrorPointer) {
-        if SwiftUIPopover.isOpened {
+        if NSApp.isActive {
             return
         }
         
         if !ConfigurationService.shared.isConfigured {
-            DispatchQueue.main.async {
-                let view = ProofView(originalText: "")
-                ProofAppDelegate.shared?.showPopover(view: view, recreate: true)
-            }
+            pasteboard.clearContents()
+            pasteboard.setString(String(localized: "Proof needs to be configured before this service can be used"), forType: .string)
             return
         }
+        
+        processingStatusCnaged(true)
+        CFRunLoopRunInMode(.defaultMode, 0.1, false)
 
         guard let originalText = pasteboard.string(forType: .string) else { return }
         let prompt = ProofingGoal.fixGrammar.promptText + "\n\n" + originalText
@@ -35,38 +41,17 @@ class ServiceHandler: NSObject {
             dispatchGroup.leave()
         })
         
-        let waitResult = waitForDg(dispatchGroup, timeout: .now() + 10.0)
+        let waitResult = dispatchGroup.wait(timeout: .now() + 10.0)
         if waitResult == .timedOut {
             print("API call timed out.")
-            processedResult = "API Timeout"
+            processedResult = String(localized: "API Timeout")
         }
 
         if let result = processedResult {
             pasteboard.clearContents()
             pasteboard.setString(result, forType: .string)
         }
-    }
-    
-    @objc func replaceTextWithWindow(_ pasteboard: NSPasteboard, userData: String?, error: NSErrorPointer) {
-        if SwiftUIPopover.isOpened {
-            return
-        }
         
-        guard let originalText = pasteboard.string(forType: .string) else {
-            return
-        }
-        
-        DispatchQueue.main.async {
-            let view = ProofView(originalText: originalText)
-            ProofAppDelegate.shared?.showPopover(view: view, recreate: true)
-        }
-    }
-    
-    private func waitForDg(_ dg: DispatchGroup, timeout: DispatchTime) -> DispatchTimeoutResult {
-        ProofAppDelegate.shared?.changeActivityIndicator(loading: true)
-        let waitResult = dg.wait(timeout: timeout)
-        ProofAppDelegate.shared?.changeActivityIndicator(loading: false)
-        
-        return waitResult
+        processingStatusCnaged(false)
     }
 }

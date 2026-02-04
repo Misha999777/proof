@@ -2,17 +2,19 @@
 //  ProofingGoal.swift
 //  Proof
 //
-//  Created by Михайло Грошевий on 28/11/2025.
+//  Created by Михайло Грошевий on 02/02/2026.
 //
 
-enum ProofingGoal: String, CaseIterable, Identifiable {
-    case fixGrammar = "Fix Grammar & Spelling"
-    case professional = "Make Professional"
-    case friendly = "Make Friendly & Casual"
-    case concise = "Make Concise"
-    case summarize = "Summarize"
+import Foundation
 
-    var id: String { self.rawValue }
+enum ProofingGoal: String, CaseIterable, Identifiable {
+    case fixGrammar
+    case professional
+    case friendly
+    case concise
+    case summarize
+    
+    var id: Self { self }
 
     var promptText: String {
         switch self {
@@ -23,9 +25,24 @@ enum ProofingGoal: String, CaseIterable, Identifiable {
         case .friendly:
             return "Rewrite the following text to be more friendly, approachable, and casual. Reply with only the rewritten plain-text version:"
         case .concise:
-            return "Rewrite the following text to be more concise and to the point. Remove unnecessary fluff. Reply with only the rewritten plain-text version:"
+            return "Rewrite the following text to be more concise and to the point. Reply with only the rewritten plain-text version:"
         case .summarize:
             return "Provide a short summary of the following text:"
+        }
+    }
+    
+    var title: String {
+        switch self {
+        case .fixGrammar:
+            return String(localized: "Fix Grammar & Spelling")
+        case .professional:
+            return String(localized: "Make Professional")
+        case .friendly:
+            return String(localized: "Make Friendly & Casual")
+        case .concise:
+            return String(localized: "Make Concise")
+        case .summarize:
+            return String(localized: "Summarize")
         }
     }
 }

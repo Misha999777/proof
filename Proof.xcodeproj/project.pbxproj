@@ -7,19 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C65C20422EDA52FC0032FB52 /* SwiftUIPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65C20412EDA52F10032FB52 /* SwiftUIPopover.swift */; };
-		C65C20452EDA597D0032FB52 /* ProofingGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C65C20442EDA59790032FB52 /* ProofingGoal.swift */; };
+		C66D42CF2F30EEA40069DB13 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C66D42CE2F30EEA40069DB13 /* Localizable.xcstrings */; };
+		C66D42E02F30F3320069DB13 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = C66D42DF2F30F3320069DB13 /* ServicesMenu.strings */; };
+		C66D42E52F310FC20069DB13 /* ProofingGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66D42E42F310FC10069DB13 /* ProofingGoal.swift */; };
 		C66D61EA2EE8597C006882BB /* ConfigurationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66D61E92EE8597C006882BB /* ConfigurationService.swift */; };
 		C66D61EC2EE8599D006882BB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C66D61EB2EE8599D006882BB /* SettingsView.swift */; };
 		C680559A2EE86E3E0064E06A /* ProofreadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68055992EE86E3E0064E06A /* ProofreadingView.swift */; };
 		C695C67F2ED5D6F800D1BEED /* ProofApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C695C67B2ED5D6F800D1BEED /* ProofApp.swift */; };
-		C695C6812ED5DE1400D1BEED /* ProofView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C695C6802ED5DE1200D1BEED /* ProofView.swift */; };
 		C695C6852ED5E06D00D1BEED /* ProofreadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C695C6842ED5E06800D1BEED /* ProofreadingService.swift */; };
 		C695C6A42ED5EC9700D1BEED /* ProofAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C695C6A32ED5EC9100D1BEED /* ProofAppDelegate.swift */; };
 		C695C6A82ED5ECEE00D1BEED /* ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C695C6A72ED5ECED00D1BEED /* ServiceHandler.swift */; };
 		C695C6C62ED60F6900D1BEED /* Proof.icon in Resources */ = {isa = PBXBuildFile; fileRef = C695C6C52ED60F6900D1BEED /* Proof.icon */; };
 		C695C6C82ED6102900D1BEED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C695C6C72ED6102900D1BEED /* Assets.xcassets */; };
-		C6E42E212F2BB343005F0852 /* MacEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E42E202F2BB342005F0852 /* MacEditor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,23 +35,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		C65C20412EDA52F10032FB52 /* SwiftUIPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPopover.swift; sourceTree = "<group>"; };
-		C65C20442EDA59790032FB52 /* ProofingGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProofingGoal.swift; sourceTree = "<group>"; };
+		C66D42CE2F30EEA40069DB13 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		C66D42DB2F30F3050069DB13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C66D42E12F30F3330069DB13 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		C66D42E22F30FBBC0069DB13 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ServicesMenu.strings; sourceTree = "<group>"; };
+		C66D42E42F310FC10069DB13 /* ProofingGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProofingGoal.swift; sourceTree = "<group>"; };
 		C66D61E92EE8597C006882BB /* ConfigurationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationService.swift; sourceTree = "<group>"; };
 		C66D61EB2EE8599D006882BB /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C6702D692EE88BEB00DFADDA /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		C6702D6A2EE88BEB00DFADDA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C68055992EE86E3E0064E06A /* ProofreadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProofreadingView.swift; sourceTree = "<group>"; };
 		C695C6692ED5CD2A00D1BEED /* Proof.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Proof.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C695C67A2ED5D6F800D1BEED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C695C67B2ED5D6F800D1BEED /* ProofApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProofApp.swift; sourceTree = "<group>"; };
-		C695C6802ED5DE1200D1BEED /* ProofView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProofView.swift; sourceTree = "<group>"; };
 		C695C6842ED5E06800D1BEED /* ProofreadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProofreadingService.swift; sourceTree = "<group>"; };
 		C695C6A32ED5EC9100D1BEED /* ProofAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProofAppDelegate.swift; sourceTree = "<group>"; };
 		C695C6A72ED5ECED00D1BEED /* ServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceHandler.swift; sourceTree = "<group>"; };
 		C695C6C52ED60F6900D1BEED /* Proof.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Proof.icon; sourceTree = "<group>"; };
 		C695C6C72ED6102900D1BEED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C6E42E202F2BB342005F0852 /* MacEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacEditor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,10 +65,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C65C20432EDA595B0032FB52 /* Enums */ = {
+		C66D42E32F310FB10069DB13 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
-				C65C20442EDA59790032FB52 /* ProofingGoal.swift */,
+				C66D42E42F310FC10069DB13 /* ProofingGoal.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -97,10 +96,9 @@
 			children = (
 				C695C67B2ED5D6F800D1BEED /* ProofApp.swift */,
 				C695C6A32ED5EC9100D1BEED /* ProofAppDelegate.swift */,
-				C695C6A62ED5ECDC00D1BEED /* AppKit */,
 				C695C69F2ED5EC5B00D1BEED /* Views */,
 				C695C6A52ED5ECCB00D1BEED /* Services */,
-				C65C20432EDA595B0032FB52 /* Enums */,
+				C66D42E32F310FB10069DB13 /* Enums */,
 				C695C6A22ED5EC7600D1BEED /* Supporting Files */,
 			);
 			path = Proof;
@@ -109,7 +107,6 @@
 		C695C69F2ED5EC5B00D1BEED /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C695C6802ED5DE1200D1BEED /* ProofView.swift */,
 				C66D61EB2EE8599D006882BB /* SettingsView.swift */,
 				C68055992EE86E3E0064E06A /* ProofreadingView.swift */,
 			);
@@ -119,7 +116,9 @@
 		C695C6A22ED5EC7600D1BEED /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				C695C67A2ED5D6F800D1BEED /* Info.plist */,
+				C66D42DB2F30F3050069DB13 /* Info.plist */,
+				C66D42DF2F30F3320069DB13 /* ServicesMenu.strings */,
+				C66D42CE2F30EEA40069DB13 /* Localizable.xcstrings */,
 				C695C6C72ED6102900D1BEED /* Assets.xcassets */,
 				C695C6C52ED60F6900D1BEED /* Proof.icon */,
 			);
@@ -134,15 +133,6 @@
 				C66D61E92EE8597C006882BB /* ConfigurationService.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		C695C6A62ED5ECDC00D1BEED /* AppKit */ = {
-			isa = PBXGroup;
-			children = (
-				C65C20412EDA52F10032FB52 /* SwiftUIPopover.swift */,
-				C6E42E202F2BB342005F0852 /* MacEditor.swift */,
-			);
-			path = AppKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -175,7 +165,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2610;
+				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					C695C6682ED5CD2A00D1BEED = {
@@ -188,7 +178,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
+				uk,
 			);
 			mainGroup = C695C6602ED5CD2A00D1BEED;
 			minimizedProjectReferenceProxies = 1;
@@ -208,7 +198,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C695C6C82ED6102900D1BEED /* Assets.xcassets in Resources */,
+				C66D42E02F30F3320069DB13 /* ServicesMenu.strings in Resources */,
 				C695C6C62ED60F6900D1BEED /* Proof.icon in Resources */,
+				C66D42CF2F30EEA40069DB13 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,14 +211,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6E42E212F2BB343005F0852 /* MacEditor.swift in Sources */,
-				C65C20422EDA52FC0032FB52 /* SwiftUIPopover.swift in Sources */,
-				C695C6812ED5DE1400D1BEED /* ProofView.swift in Sources */,
 				C695C6A82ED5ECEE00D1BEED /* ServiceHandler.swift in Sources */,
 				C66D61EC2EE8599D006882BB /* SettingsView.swift in Sources */,
 				C680559A2EE86E3E0064E06A /* ProofreadingView.swift in Sources */,
 				C695C6852ED5E06D00D1BEED /* ProofreadingService.swift in Sources */,
-				C65C20452EDA597D0032FB52 /* ProofingGoal.swift in Sources */,
+				C66D42E52F310FC20069DB13 /* ProofingGoal.swift in Sources */,
 				C695C67F2ED5D6F800D1BEED /* ProofApp.swift in Sources */,
 				C66D61EA2EE8597C006882BB /* ConfigurationService.swift in Sources */,
 				C695C6A42ED5EC9700D1BEED /* ProofAppDelegate.swift in Sources */,
@@ -235,12 +224,25 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		C66D42DF2F30F3320069DB13 /* ServicesMenu.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C66D42E12F30F3330069DB13 /* uk */,
+				C66D42E22F30FBBC0069DB13 /* en */,
+			);
+			name = ServicesMenu.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		C695C6722ED5CD2B00D1BEED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -298,6 +300,7 @@
 				SDKROOT = macosx;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -307,6 +310,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -357,6 +361,7 @@
 				SDKROOT = macosx;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
 		};
@@ -394,7 +399,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mhroshev.Proof;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -442,7 +447,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mhroshev.Proof;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

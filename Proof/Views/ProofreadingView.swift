@@ -10,15 +10,10 @@ import SwiftUI
 // MARK: - ViewModel
 @Observable
 class ProofreadingModel {
-    var originalText: String
+    var originalText: String = ""
     var proofreadText: String = ""
     var selectedGoal: ProofingGoal = .fixGrammar
     var isLoading = false
-    
-    init(originalText: String) {
-        self.originalText = originalText
-        runProofreading()
-    }
     
     func reset() {
         originalText = ""
@@ -32,9 +27,8 @@ class ProofreadingModel {
         let fullPrompt = selectedGoal.promptText + "\n\n" + originalText
         
         proofread(text: fullPrompt) { [weak self] status, text in
-            guard let self = self else { return }
-            self.proofreadText = text
-            self.isLoading = false
+            self!.proofreadText = text
+            self!.isLoading = false
         }
     }
 }
@@ -42,9 +36,9 @@ class ProofreadingModel {
 // MARK: - View
 struct ProofreadingView: View {
     
-    @Bindable var vm: ProofreadingModel
     @Binding var showSettings: Bool
-
+    
+    @State var vm = ProofreadingModel()
     @FocusState var focused
 
     var body: some View {
@@ -64,9 +58,9 @@ struct ProofreadingView: View {
                     .help("Settings")
                 }
             ) {
-                Picker("", selection: $vm.selectedGoal) {
+                Picker(String(""), selection: $vm.selectedGoal) {
                     ForEach(ProofingGoal.allCases) { goal in
-                        Text(goal.rawValue).tag(goal)
+                        Text(goal.title).tag(goal)
                     }
                 }
                 .labelsHidden()
@@ -88,7 +82,7 @@ struct ProofreadingView: View {
                     .help("Clear all text")
                 }
             ) {
-                styledEditor($vm.originalText, height: 150, isEditable: true)
+                styledEditor($vm.originalText, height: 150)
                     .focused($focused)
                     .onAppear {
                         DispatchQueue.main.async {
@@ -114,7 +108,7 @@ struct ProofreadingView: View {
             }
             
             Section(header: sectionHeader("Result")) {
-                styledEditor($vm.proofreadText, height: 150, isEditable: false)
+                styledEditor(.constant(vm.proofreadText), height: 150)
             }
             
             Divider()
@@ -143,16 +137,19 @@ struct ProofreadingView: View {
 
 // MARK: - UI Helpers
 @ViewBuilder
-func sectionHeader(_ title: String) -> some View {
+func sectionHeader(_ title: LocalizedStringKey) -> some View {
     Text(title)
         .font(.headline)
         .foregroundStyle(.secondary)
 }
 
 @ViewBuilder
-func styledEditor(_ content: Binding<String>, height: CGFloat, isEditable: Bool) -> some View {
-    MacEditor(content: content, isEditable: isEditable)
+func styledEditor(_ text: Binding<String>, height: CGFloat) -> some View {
+    TextEditor(text: text)
+        .font(.system(size: 14))
         .frame(height: height)
+        .padding(4)
+        .background(Color(nsColor: .textBackgroundColor))
         .cornerRadius(6)
         .overlay(
             RoundedRectangle(cornerRadius: 6)
@@ -163,12 +160,10 @@ func styledEditor(_ content: Binding<String>, height: CGFloat, isEditable: Bool)
 // MARK: - Preview
 #Preview {
     struct Preview: View {
-
-        @State var model = ProofreadingModel(originalText: "")
         @State var show = false
 
         var body: some View {
-            ProofreadingView(vm: model, showSettings: $show)
+            ProofreadingView(showSettings: $show)
                 .frame(width: 400)
         }
     }

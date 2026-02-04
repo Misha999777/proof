@@ -10,13 +10,19 @@ import SwiftUI
 // MARK: - ViewModel
 @Observable
 class SettingsViewModel {
+    
+    enum TestResult {
+        case success
+        case failure
+        case progress
+        case unknown
+    }
+    
     var apiUrl: String
     var apiKey: String
     var model: String
 
-    var testStatus: String = ""
-    var isTesting: Bool = false
-    var testSuccess: Bool = false
+    var testStatus = TestResult.unknown
 
     init() {
         let config = ConfigurationService.shared
@@ -32,18 +38,14 @@ class SettingsViewModel {
     }
 
     func testConnection() {
-        isTesting = true
-        testSuccess = false
-        testStatus = "Testing connection..."
+        testStatus = .progress
 
         proofread(text: "Hello", apiUrl: apiUrl, apiKey: apiKey, model: model) { [weak self] success, response in
             DispatchQueue.main.async {
-                self?.isTesting = false
-                self?.testSuccess = success
                 if success {
-                    self?.testStatus = "Success!"
+                    self!.testStatus = .success
                 } else {
-                    self?.testStatus = "Failed. Check your configuration."
+                    self!.testStatus = .failure
                 }
             }
         }
@@ -75,7 +77,7 @@ struct SettingsView: View {
                 GridRow {
                     Text("API URL")
                         .gridColumnAlignment(.trailing)
-                    TextField("https://generativelanguage.googleapis.com/v1beta/openai/", text: $vm.apiUrl)
+                    TextField(String("https://generativelanguage.googleapis.com/v1beta/openai/"), text: $vm.apiUrl)
                         .textFieldStyle(.roundedBorder)
                         .focused($focused)
                         .onAppear {
@@ -88,14 +90,14 @@ struct SettingsView: View {
                 GridRow {
                     Text("API Key")
                         .gridColumnAlignment(.trailing)
-                    SecureField("********", text: $vm.apiKey)
+                    SecureField(String("********"), text: $vm.apiKey)
                         .textFieldStyle(.roundedBorder)
                 }
                 
                 GridRow {
                     Text("Model")
                         .gridColumnAlignment(.trailing)
-                    TextField("gemini-2.5-flash", text: $vm.model)
+                    TextField(String("gemini-2.5-flash"), text: $vm.model)
                         .textFieldStyle(.roundedBorder)
                 }
             }
@@ -104,18 +106,18 @@ struct SettingsView: View {
                 Button {
                     vm.testConnection()
                 } label: {
-                    if vm.isTesting {
+                    if vm.testStatus == .progress {
                         ProgressView().controlSize(.small)
                     } else {
                         Text("Test Connection")
                     }
                 }
-                .disabled(vm.isTesting || vm.apiUrl.isEmpty || vm.apiKey.isEmpty || vm.model.isEmpty)
+                .disabled(vm.testStatus == .progress || vm.apiUrl.isEmpty || vm.apiKey.isEmpty || vm.model.isEmpty)
                 
-                if !vm.testStatus.isEmpty {
-                    Text(vm.testStatus)
+                if vm.testStatus == .success || vm.testStatus == .failure  {
+                    Text(vm.testStatus == .success ? "Connection Successfull" : "Connection Failed")
                         .font(.caption)
-                        .foregroundStyle(vm.testSuccess ? .green : .red)
+                        .foregroundStyle(vm.testStatus == .success ? .green : .red)
                 }
             }
             
@@ -125,7 +127,7 @@ struct SettingsView: View {
                 Button(role: .destructive) {
                     NSApplication.shared.terminate(nil)
                 } label: {
-                    Label("Exit App", systemImage: "power")
+                    Label("Exit", systemImage: "power")
                 }
                 
                 Spacer()
@@ -145,7 +147,7 @@ struct SettingsView: View {
                         .frame(minWidth: 80)
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(!vm.testSuccess)
+                .disabled(vm.testStatus != .success)
             }
         }
         .padding(20)
