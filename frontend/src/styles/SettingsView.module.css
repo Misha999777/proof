@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.subtext {
+  color: var(--colorNeutralForeground3);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.testRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.successText {
+  color: var(--colorPaletteGreenForeground1);
+  font-size: 12px;
+}
+
+.failureText {
+  color: var(--colorPaletteRedForeground1);
+  font-size: 12px;
+}
+
+.footerRow {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+

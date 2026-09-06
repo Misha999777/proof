@@ -1,0 +1,6 @@
+.cache/
+
+build/
+embedded/
+
+frontend/node_modules/

@@ -1,0 +1,4 @@
+{
+    "cmake.generator": "Ninja",
+    "C_Cpp.intelliSenseEngine": "disabled",
+}
