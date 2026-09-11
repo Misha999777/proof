@@ -3,12 +3,10 @@
 #include <optional>
 #include <saucer/smartview.hpp>
 
-class ProofApp;
-
-class ProofWindow {
+class ProofReaderWindow {
 public:
-    ProofWindow(saucer::application* app, ProofApp* parentApp, bool devMode = false);
-    ~ProofWindow();
+    ProofReaderWindow(saucer::application* app, bool devMode = false);
+    ~ProofReaderWindow();
 
     void show();
     void hide();
@@ -20,5 +18,4 @@ private:
 
     std::shared_ptr<saucer::window> m_window;
     std::optional<saucer::smartview> m_webview;
-    ProofApp* m_parentApp;
 };

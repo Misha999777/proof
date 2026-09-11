@@ -3,7 +3,7 @@ setlocal
 
 set "STAGING_DIR=..\build\msix_stage"
 set "PACKAGING_DIR=."
-set "OUTPUT=..\build\Proof.msix"
+set "OUTPUT=..\build\ProofReader.msix"
 
 echo Starting MSIX Build Process...
 echo.
@@ -13,7 +13,7 @@ if exist "%STAGING_DIR%" rmdir /S /Q "%STAGING_DIR%"
 mkdir "%STAGING_DIR%"
 
 echo 2. Copying executable to staging directory...
-copy /Y "..\build\Proof.exe" "%STAGING_DIR%\" >nul
+copy /Y "..\build\ProofReader.exe" "%STAGING_DIR%\" >nul
 
 echo 3. Copying manifest and assets to staging directory...
 copy /Y "%PACKAGING_DIR%\AppxManifest.xml" "%STAGING_DIR%\" >nul

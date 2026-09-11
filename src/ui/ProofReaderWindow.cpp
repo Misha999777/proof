@@ -1,9 +1,8 @@
-#include "ui/ProofWindow.hpp"
+#include "ui/ProofReaderWindow.hpp"
 
 #include <dwmapi.h>
 #include <saucer/embedded/all.hpp>
 
-#include "core/ProofApp.hpp"
 #include "utils/Utils.hpp"
 
 #ifndef DWMWA_USE_IMMERSIVE_DARK_MODE
@@ -25,7 +24,7 @@ static LRESULT CALLBACK themeSubclassProc(HWND hwnd, UINT msg, WPARAM wParam, LP
     return DefSubclassProc(hwnd, msg, wParam, lParam);
 }
 
-std::string ProofWindow::utf16_to_utf8(const std::wstring& wstr) {
+std::string ProofReaderWindow::utf16_to_utf8(const std::wstring& wstr) {
     if (wstr.empty()) return {};
     int size = WideCharToMultiByte(CP_UTF8, 0, wstr.data(), (int)wstr.size(), nullptr, 0, nullptr, nullptr);
     std::string result(size, 0);
@@ -33,21 +32,19 @@ std::string ProofWindow::utf16_to_utf8(const std::wstring& wstr) {
     return result;
 }
 
-ProofWindow::ProofWindow(saucer::application* app, ProofApp* parentApp, bool devMode)
-    : m_parentApp(parentApp)
-{
+ProofReaderWindow::ProofReaderWindow(saucer::application* app, bool devMode) {
     auto window_result = saucer::window::create(app);
     m_window = std::move(window_result.value());
 
     auto webview_result = saucer::smartview::create({.window = m_window});
     m_webview.emplace(std::move(webview_result.value()));
 
-    m_window->set_title("Proof");
+    m_window->set_title("ProofReader");
     m_window->set_size({420, 620});
     m_window->set_resizable(false);
 
     // Find our window and apply the embedded icon via Win32
-    HWND hwnd = FindWindowW(NULL, L"Proof");
+    HWND hwnd = FindWindowW(NULL, L"ProofReader");
     if (hwnd) {
         HINSTANCE hInstance = GetModuleHandle(NULL);
         HICON hIcon = LoadIconW(hInstance, MAKEINTRESOURCEW(101));
@@ -80,25 +77,25 @@ ProofWindow::ProofWindow(saucer::application* app, ProofApp* parentApp, bool dev
     }
 }
 
-ProofWindow::~ProofWindow() {
-    HWND hwnd = FindWindowW(NULL, L"Proof");
+ProofReaderWindow::~ProofReaderWindow() {
+    HWND hwnd = FindWindowW(NULL, L"ProofReader");
     if (hwnd) {
         RemoveWindowSubclass(hwnd, themeSubclassProc, 1);
     }
 }
 
-void ProofWindow::show() {
+void ProofReaderWindow::show() {
     m_window->show();
 }
 
-void ProofWindow::hide() {
+void ProofReaderWindow::hide() {
     m_window->hide();
 }
 
-void ProofWindow::focus() {
+void ProofReaderWindow::focus() {
     m_window->focus();
 }
 
-void ProofWindow::sendText(const std::wstring& text) {
+void ProofReaderWindow::sendText(const std::wstring& text) {
     m_webview->execute("if(window.setOriginalText) window.setOriginalText({});", utf16_to_utf8(text));
 }

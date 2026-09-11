@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(ProofApp)
+project(ProofReader)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -18,10 +18,10 @@ file(GLOB_RECURSE SOURCES
     "src/*.hpp"
     "src/*.rc"
 )
-add_executable(Proof ${SOURCES})
-target_include_directories(Proof PRIVATE src)
+add_executable(ProofReader ${SOURCES})
+target_include_directories(ProofReader PRIVATE src)
 
-target_link_libraries(Proof PRIVATE saucer::saucer saucer::embedded)
-target_link_libraries(Proof PRIVATE dwmapi comctl32)
+target_link_libraries(ProofReader PRIVATE saucer::saucer saucer::embedded)
+target_link_libraries(ProofReader PRIVATE dwmapi comctl32)
 
-saucer_embed("${CMAKE_SOURCE_DIR}/build/frontend" TARGET Proof)
+saucer_embed("${CMAKE_SOURCE_DIR}/build/frontend" TARGET ProofReader)

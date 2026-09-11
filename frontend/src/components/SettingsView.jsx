@@ -27,7 +27,7 @@ function SettingsView({ onClose, isConfigured }) {
     setModel(localStorage.getItem('model') || 'gemini-2.5-flash');
 
     if (window.saucer) {
-      saucer.call("resize", [500, 475]);
+      saucer.call("resize", [500, 470]);
     }
   }, []);
 
@@ -53,7 +53,7 @@ function SettingsView({ onClose, isConfigured }) {
           <Title3>Configuration</Title3>
         </div>
         <Text size={200} className={styles.subtext}>
-          Proof works with any Model Provider that supports an OpenAI-compatible API (e.g., OpenAI, Gemini, Ollama).
+          ProofReader works with any Model Provider that supports an OpenAI-compatible API (e.g., OpenAI, Gemini, Ollama).
         </Text>
       </div>
 

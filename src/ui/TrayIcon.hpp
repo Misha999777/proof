@@ -2,11 +2,11 @@
 
 #include <Windows.h>
 
-class ProofApp;
+class ProofReaderApp;
 
 class TrayIcon {
 public:
-    TrayIcon(ProofApp* app);
+    TrayIcon(ProofReaderApp* app);
     ~TrayIcon();
 
     HWND getHwnd() const { return m_hwnd; }
@@ -14,7 +14,7 @@ public:
 private:
     static LRESULT CALLBACK windowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-    ProofApp* m_app;
+    ProofReaderApp* m_app;
     HWND m_hwnd;
     NOTIFYICONDATAW m_nid;
 };

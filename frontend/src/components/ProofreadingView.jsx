@@ -72,7 +72,7 @@ function ProofreadingView({ onShowSettings }) {
 
   useEffect(() => {
     if (window.saucer) {
-      saucer.call("resize", [420, hasCurrentResult ? 650 : 600]);
+      saucer.call("resize", [400, hasCurrentResult ? 635 : 585]);
     }
   }, [hasCurrentResult]);
 
@@ -155,7 +155,15 @@ function ProofreadingView({ onShowSettings }) {
       <div className={styles.fieldGroup}>
         <div className={styles.headerRow}>
           <Label weight="semibold">Original Text</Label>
-          <Button appearance="subtle" size="small" icon={<Delete24Regular />} onClick={reset}>Clear</Button>
+          <Button
+            appearance="subtle"
+            size="small"
+            icon={<Delete24Regular />}
+            disabled={isLoading || isFollowingUp}
+            onClick={reset}
+          >
+            Clear
+          </Button>
         </div>
         <Textarea
           value={originalText}

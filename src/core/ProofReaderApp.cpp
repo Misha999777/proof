@@ -1,17 +1,17 @@
-#include "core/ProofApp.hpp"
+#include "core/ProofReaderApp.hpp"
 
-ProofApp::ProofApp() : m_hMutex(NULL) {}
+ProofReaderApp::ProofReaderApp() : m_hMutex(NULL) {}
 
-ProofApp::~ProofApp() {
+ProofReaderApp::~ProofReaderApp() {
     if (m_hMutex) {
         CloseHandle(m_hMutex);
     }
 }
 
-bool ProofApp::enforceSingleInstance() {
-    m_hMutex = CreateMutexW(NULL, TRUE, L"ProofAppSingleInstanceMutex");
+bool ProofReaderApp::enforceSingleInstance() {
+    m_hMutex = CreateMutexW(NULL, TRUE, L"ProofReaderSingleInstanceMutex");
     if (GetLastError() == ERROR_ALREADY_EXISTS) {
-        HWND existing = FindWindowW(L"ProofTrayWindow", L"ProofTrayWindow");
+        HWND existing = FindWindowW(L"ProofReaderTrayWindow", L"ProofReaderTrayWindow");
         if (existing) {
             PostMessageW(existing, WM_USER + 2, 0, 0);
         }
@@ -20,7 +20,7 @@ bool ProofApp::enforceSingleInstance() {
     return true;
 }
 
-int ProofApp::run(const std::wstring& cmdLine) {
+int ProofReaderApp::run(const std::wstring& cmdLine) {
     if (!enforceSingleInstance()) {
         return 0;
     }
@@ -29,7 +29,7 @@ int ProofApp::run(const std::wstring& cmdLine) {
 
     bool hiddenLaunch = cmdLine.find(L"--autostart") != std::wstring::npos;
     bool devMode = (cmdLine.find(L"--dev") != std::wstring::npos);
-    auto app_result = saucer::application::create({.id = "proof-app", .quit_on_last_window_closed = false});
+    auto app_result = saucer::application::create({.id = "ProofReader", .quit_on_last_window_closed = false});
     if (!app_result) {
         return 1;
     }
@@ -40,13 +40,13 @@ int ProofApp::run(const std::wstring& cmdLine) {
 
         m_trayIcon = std::make_unique<TrayIcon>(this);
         m_hotkeyManager = std::make_unique<HotkeyManager>(m_trayIcon->getHwnd(), 1);
-        m_proofWindow = std::make_unique<ProofWindow>(app, this, devMode);
+        m_proofReaderWindow = std::make_unique<ProofReaderWindow>(app, devMode);
 
         if (!hiddenLaunch) {
-            m_proofWindow->show();
+            m_proofReaderWindow->show();
         }
         co_await app->finish();
-        m_proofWindow.reset();
+        m_proofReaderWindow.reset();
         m_hotkeyManager.reset();
         m_trayIcon.reset();
         m_app = nullptr;
@@ -55,30 +55,30 @@ int ProofApp::run(const std::wstring& cmdLine) {
     return appInstance.run(start_coro);
 }
 
-void ProofApp::toggleWindow() {
+void ProofReaderApp::toggleWindow() {
     if (!m_app) return;
     m_app->post([this]() {
-        if (m_proofWindow) {
-            m_proofWindow->show();
-            m_proofWindow->focus();
+        if (m_proofReaderWindow) {
+            m_proofReaderWindow->show();
+            m_proofReaderWindow->focus();
         }
     });
 }
 
-void ProofApp::showWindowWithText(const std::wstring& text) {
+void ProofReaderApp::showWindowWithText(const std::wstring& text) {
     if (!m_app) return;
     m_app->post([this, text]() {
-        if (m_proofWindow) {
+        if (m_proofReaderWindow) {
             if (!text.empty()) {
-                m_proofWindow->sendText(text);
+                m_proofReaderWindow->sendText(text);
             }
-            m_proofWindow->show();
-            m_proofWindow->focus();
+            m_proofReaderWindow->show();
+            m_proofReaderWindow->focus();
         }
     });
 }
 
-void ProofApp::handleHotkey(int hotkeyId) {
+void ProofReaderApp::handleHotkey(int hotkeyId) {
     if (hotkeyId == 1 && m_hotkeyManager) {
         std::wstring text = m_hotkeyManager->getSelectedTextViaUIA();
         if (!text.empty()) {
@@ -87,7 +87,7 @@ void ProofApp::handleHotkey(int hotkeyId) {
     }
 }
 
-void ProofApp::quit() {
+void ProofReaderApp::quit() {
     if (!m_app) return;
     m_app->post([this]() {
         m_app->quit();

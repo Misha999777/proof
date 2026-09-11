@@ -5,14 +5,14 @@
 #include <Windows.h>
 #include <saucer/app.hpp>
 
-#include "ui/ProofWindow.hpp"
+#include "ui/ProofReaderWindow.hpp"
 #include "ui/TrayIcon.hpp"
 #include "system/HotkeyManager.hpp"
 
-class ProofApp {
+class ProofReaderApp {
 public:
-    ProofApp();
-    ~ProofApp();
+    ProofReaderApp();
+    ~ProofReaderApp();
 
     int run(const std::wstring& cmdLine);
 
@@ -28,7 +28,7 @@ private:
 
     saucer::application* m_app = nullptr;
     std::unique_ptr<TrayIcon> m_trayIcon;
-    std::unique_ptr<ProofWindow> m_proofWindow;
+    std::unique_ptr<ProofReaderWindow> m_proofReaderWindow;
     std::unique_ptr<HotkeyManager> m_hotkeyManager;
     HANDLE m_hMutex;
 };

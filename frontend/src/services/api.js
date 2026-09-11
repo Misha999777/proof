@@ -3,10 +3,6 @@ export async function proofread(messages, customApiUrl, customApiKey, customMode
   const apiKey = customApiKey || localStorage.getItem('apiKey');
   const model = customModel || localStorage.getItem('model');
 
-  if (!apiUrl || !apiKey || !model) {
-    return { success: false, text: 'API not configured' };
-  }
-
   let urlString = apiUrl;
   if (!urlString.endsWith('/chat/completions')) {
     if (!urlString.endsWith('/')) {
@@ -33,15 +29,9 @@ export async function proofread(messages, customApiUrl, customApiKey, customMode
     }
 
     const data = await response.json();
-    let text = data?.choices?.[0]?.message?.content;
+    let text = data.choices[0].message.content;
     
-    if (text) {
-      // Remove <thought>...</thought> blocks that might come from some models
-      text = text.replace(/<thought>[\s\S]*?<\/thought>/g, '').trim();
-      return { success: true, text };
-    }
-
-    return { success: false, text: 'Invalid response format' };
+    return { success: true, text };
   } catch (err) {
     return { success: false, text: 'API Error' };
   }

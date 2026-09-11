@@ -1,6 +1,6 @@
 #include "ui/TrayIcon.hpp"
 
-#include "core/ProofApp.hpp"
+#include "core/ProofReaderApp.hpp"
 #include "utils/Utils.hpp"
 #include "resources/resource.hpp"
 
@@ -32,17 +32,17 @@ static void initDarkModeMenuSupport() {
     }
 }
 
-TrayIcon::TrayIcon(ProofApp* app) : m_app(app) {
+TrayIcon::TrayIcon(ProofReaderApp* app) : m_app(app) {
     initDarkModeMenuSupport();
 
     HINSTANCE hInstance = GetModuleHandleW(NULL);
     WNDCLASSW wc = {};
     wc.lpfnWndProc = TrayIcon::windowProc;
     wc.hInstance = hInstance;
-    wc.lpszClassName = L"ProofTrayWindow";
+    wc.lpszClassName = L"ProofReaderTrayWindow";
     RegisterClassW(&wc);
 
-    m_hwnd = CreateWindowW(L"ProofTrayWindow", L"ProofTrayWindow", 0, 0, 0, 0, 0, NULL, NULL, hInstance, this);
+    m_hwnd = CreateWindowW(L"ProofReaderTrayWindow", L"ProofReaderTrayWindow", 0, 0, 0, 0, 0, NULL, NULL, hInstance, this);
 
     SetWindowLongPtr(m_hwnd, GWLP_USERDATA, (LONG_PTR)this);
 
@@ -53,7 +53,7 @@ TrayIcon::TrayIcon(ProofApp* app) : m_app(app) {
     m_nid.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
     m_nid.uCallbackMessage = WM_TRAYICON;
     m_nid.hIcon = LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_APP_ICON));
-    wcscpy_s(m_nid.szTip, L"Proof");
+    wcscpy_s(m_nid.szTip, L"ProofReader");
     Shell_NotifyIconW(NIM_ADD, &m_nid);
 }
 

@@ -1,9 +1,9 @@
-#include "core/ProofApp.hpp"
+#include "core/ProofReaderApp.hpp"
 
 #include <string>
 #include <Windows.h>
 
 int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow) {
-    ProofApp app;
+    ProofReaderApp app;
     return app.run(pCmdLine);
 }
